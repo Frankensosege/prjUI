@@ -3,12 +3,7 @@ from FlaskTest.models import Users
 from FlaskTest import db
 import datetime
 
-bp = Blueprint('main', __name__, url_prefix='/')
-
-
-@bp.route('/hello')
-def hello_pybo():
-    return 'Hello, Pybo!'
+bp = Blueprint('login', __name__, url_prefix='/')
 
 @bp.route('/', methods=['GET', 'POST'])
 def login():
@@ -23,7 +18,7 @@ def login():
 
         if user is not None:
             # redirect the user to the home page
-            return redirect(url_for('main.home'), name=name)
+            return redirect(url_for('login.home'), name=name)
         else:
             # display an error message
             error = 'Invalid credentials. Please try again.'
@@ -41,10 +36,9 @@ def register():
         answer = Users(id=usr_id, passwd=pw, create_date=datetime.now(), lastupdate_date=datetime.now())
         Users.answer_set.append(answer)
         db.session.commit()
-        return redirect(url_for('main.home', question_id=question_id))
+        return redirect(url_for('login.home'))
 
 @bp.route('/home.html/<name>', methods=['GET', 'POST'])
 def home(name):
-    print('sdddddddddddddddddddddddddddddddddddddddddddddd')
     error = None
     return render_template('home.html', name=name)
