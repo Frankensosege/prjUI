@@ -23,7 +23,7 @@ def login():
 
         if user is not None:
             # redirect the user to the home page
-            return redirect(url_for('home'), name=name)
+            return redirect(url_for('main.home'), name=name)
         else:
             # display an error message
             error = 'Invalid credentials. Please try again.'
@@ -41,11 +41,7 @@ def register():
         answer = Users(id=usr_id, passwd=pw, create_date=datetime.now(), lastupdate_date=datetime.now())
         Users.answer_set.append(answer)
         db.session.commit()
-        return redirect(url_for('question.detail', question_id=question_id))
-
-        cursor.close()
-
-    return render_template('login.html', error=error)
+        return redirect(url_for('main.home', question_id=question_id))
 
 @bp.route('/home.html/<name>', methods=['GET', 'POST'])
 def home(name):
