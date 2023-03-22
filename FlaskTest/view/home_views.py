@@ -32,8 +32,9 @@ def register():
     if request.method == 'POST':
         usr_id = request.form['regi_id']
         pw = request.form['regi_pw']
+        usr_name = request.form['user_name']
 
-        answer = Users(id=usr_id, passwd=pw, create_date=datetime.now(), lastupdate_date=datetime.now())
+        answer = Users(id=usr_id, passwd=pw, user_name=usr_name, create_date=datetime.now(), lastupdate_date=datetime.now())
         Users.answer_set.append(answer)
         db.session.commit()
         return redirect(url_for('login.home'))
